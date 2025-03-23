@@ -17,8 +17,37 @@
 
 #include "stdio.h"
 #include "stdlib.h"
-#include "lib.h"
 #include "string.h"
+#include "lib.h"
+
+#include "stdbool.h"
+
+double *sum_arr(int len_x, int len_y, double matrix[len_x][len_y], bool is_row){
+    double *res_sum = malloc(sizeof(double) * (is_row? len_x : len_y)); /* Alloc necessary memory checking if its row or column */
+
+    /* 
+        1 - Loop for row
+        2 - Loop for column
+    */
+    if(is_row == true){
+        for(int i = 0; i < len_x; i++){
+            double internal_sum = 0;
+            for(int j = 0; j < len_y; j++)
+                internal_sum += matrix[i][j];
+            res_sum[i] = internal_sum;
+        }
+    }
+    else{
+        for(int i = 0; i < len_y; i++){
+            double internal_sum = 0;
+            for(int j = 0; j < len_x; j++)
+                internal_sum += matrix[j][i];
+            res_sum[i] = internal_sum;
+        }
+    }
+
+    return res_sum;
+}
 
 int main(int argc, char *argv[]){
     
@@ -44,11 +73,24 @@ int main(int argc, char *argv[]){
 
     cp_buffer_arr(input_buffer, len_x, len_y, matrix);
 
+    double *sum_row = sum_arr(len_x, len_y, matrix, true);
+    double *sum_col = sum_arr(len_x, len_y, matrix, false);
+
+
     for(int i = 0; i < len_x; i++){
         for(int j = 0; j < len_y; j++)
             printf("%f\t", matrix[i][j]);
         printf("\n");
     }
+    printf("--------\n");
+
+    for(int i = 0; i < len_x; i++)
+        printf("%f ", sum_row[i]);
+    
+    printf("\n--------\n");
+
+    for(int i = 0; i < len_y; i++)
+        printf("%f ", sum_col[i]);
 
     return 0;
 }
