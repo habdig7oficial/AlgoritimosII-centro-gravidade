@@ -71,6 +71,37 @@ double *slice_arr(double *arr, int begin, int end){
     return slice;
 }
 
+double *mass_arr(double arr[], int len){
+    double *diff_arr = malloc(sizeof(double) * len);
+    for(int i = 1; i <= len; i++){
+        double before = sum_arr(slice_arr(arr, 0, i - 1), i);
+        double after = sum_arr(slice_arr(arr, i, len), len - i);
+        diff_arr[i - 1] = fabs(after - before);
+
+        printf("|%f - %f| = %f\n\n", before, after, diff_arr[i - 1]);
+    }
+    return diff_arr;
+}
+
+struct Minimun{
+    double value;
+    int index;
+};
+
+struct Minimun min(double arr[], int len){
+    struct Minimun res = {
+        .value = arr[0],
+        .index = 0
+    };
+    for(int i = 0; i < len ; i++)
+        if(arr[i] < res.value){
+            res.value = arr[i];
+            res.index = i;
+        }
+        
+    return res;
+}
+
 int main(int argc, char *argv[]){
     
     /* Check if first agument is NULL */
@@ -98,16 +129,17 @@ int main(int argc, char *argv[]){
     double *sum_row = sum_matrix(len_x, len_y, matrix, true);
     double *sum_col = sum_matrix(len_x, len_y, matrix, false);
 
-    printf("Provided Matrix:\n");
+    printf("-- PROVIDED MATRIX --\n");
     print_matrix(len_x, len_y, matrix);
 
-    printf("--------\nX: ");
+    printf("\n-- SUM --");
+    printf("\nX: ");
 
     /* Print sum x */
     for(int i = 0; i < len_x; i++)
         printf("%f ", sum_row[i]);
     
-    printf("\n--------\nY: ");
+    printf("\nY: ");
 
     /* Print sum y */
     for(int i = 0; i < len_y; i++)
@@ -115,20 +147,23 @@ int main(int argc, char *argv[]){
 
     printf("\n\n");
 
+    printf("-- X DIFFERENCES --\n");
     /* Calc X mass center */
-    for(int i = 1; i <= len_x; i++){
-        double before = sum_arr(slice_arr(sum_row, 0, i - 1), i);
-        double after = sum_arr(slice_arr(sum_row, i, len_x), len_x - i);
-        printf("|%f - %f| = %f\n\n", before, after, fabs(after - before));
-    }
+    double *mass_x = mass_arr(sum_row, len_x);
+    struct Minimun center_x = min(mass_x, len_x);
 
-    printf("\n-----\n");
 
-    for(int i = 1; i <= len_y; i++){
-        double before = sum_arr(slice_arr(sum_col, 0, i - 1), i);
-        double after = sum_arr(slice_arr(sum_col, i, len_y), len_y - i);
-        printf("|%f - %f| = %f\n\n", before, after, fabs(after - before));
-    }
+    printf("\n-- Y DIFFERENCES --\n");
+    /* Calc Y mass center */
+    double *mass_y = mass_arr(sum_col, len_y);
+    struct Minimun center_y = min(mass_y, len_y);
+
+    for(int i = 0; i < len_y; i++)
+        printf("%f ", mass_y[i]);
+
+
+    printf("\nX[%d] mass center: %f\n", center_x.index, center_x.value);
+    printf("Y[%d] mass center: %f", center_y.index, center_y.value);
 
 
     return 0;
