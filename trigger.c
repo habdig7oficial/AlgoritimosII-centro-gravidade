@@ -19,6 +19,20 @@
 
 
 int main(int argc, char *argv[]){
-    printf("%s", argv[1]);
+
+    if(argv[1] == NULL){
+        printf("No file provided, exiting...\n");
+        return -1;
+    }
+
+    FILE *ptr_f = fopen(argv[1], "r");
+    fseek(ptr_f, 0, SEEK_END);
+
+    int file_size = ftell(ptr_f);
+
+    printf("%d", file_size);
+
+    fclose(ptr_f);
+
     return 0;
 }
