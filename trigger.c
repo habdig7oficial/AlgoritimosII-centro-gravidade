@@ -99,12 +99,8 @@ int main(int argc, char *argv[]){
     double *sum_col = sum_matrix(len_x, len_y, matrix, false);
 
     printf("Provided Matrix:\n");
-    /* Print all matrix */
-    for(int i = 0; i < len_x; i++){
-        for(int j = 0; j < len_y; j++)
-            printf("%f\t", matrix[i][j]);
-        printf("\n");
-    }
+    print_matrix(len_x, len_y, matrix);
+
     printf("--------\nX: ");
 
     /* Print sum x */
@@ -118,7 +114,6 @@ int main(int argc, char *argv[]){
         printf("%f ", sum_col[i]);
 
     printf("\n\n");
-   // printf("\n%f", sum_arr(slice_arr(sum_row, 0, 0), 3));
 
     /* Calc X mass center */
     for(int i = 1; i <= len_x; i++){

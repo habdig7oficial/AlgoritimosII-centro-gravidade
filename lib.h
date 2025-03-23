@@ -59,3 +59,11 @@ void cp_buffer_arr(char *buffer, int len_x, int len_y, double matrix[len_x][len_
         str_ptr = strtok(NULL, " ");
     }
 }
+
+void print_matrix(int len_x, int len_y, double matrix[len_x][len_y]){
+    for(int i = 0; i < len_x; i++){
+        for(int j = 0; j < len_y; j++)
+            printf("%f\t", matrix[i][j]);
+        printf("\n");
+    }
+}
