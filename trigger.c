@@ -120,9 +120,18 @@ int main(int argc, char *argv[]){
     printf("\n\n");
    // printf("\n%f", sum_arr(slice_arr(sum_row, 0, 0), 3));
 
+    /* Calc X mass center */
     for(int i = 1; i <= len_x; i++){
         double before = sum_arr(slice_arr(sum_row, 0, i - 1), i);
         double after = sum_arr(slice_arr(sum_row, i, len_x), len_x - i);
+        printf("|%f - %f| = %f\n\n", before, after, fabs(after - before));
+    }
+
+    printf("\n-----\n");
+
+    for(int i = 1; i <= len_y; i++){
+        double before = sum_arr(slice_arr(sum_col, 0, i - 1), i);
+        double after = sum_arr(slice_arr(sum_col, i, len_y), len_y - i);
         printf("|%f - %f| = %f\n\n", before, after, fabs(after - before));
     }
 
