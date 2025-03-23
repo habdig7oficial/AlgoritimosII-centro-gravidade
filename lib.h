@@ -23,9 +23,11 @@ char *read_file(char argv[]){
 
 void cp_buffer_arr(char *buffer, int len_x, int len_y, double matrix[len_x][len_y]){
     /* Override all \n for whitespaces */
-    for(int i = 0; buffer[i] != '\0'; i++)
-        if(buffer[i] == '\n')
-            buffer[i] = ' ';
+    char *char_ptr = strchr(buffer, '\n');
+    for(int i = 0; char_ptr != NULL; i++){
+        *char_ptr = ' ';
+        char_ptr = strchr(char_ptr + 1, '\n');
+    }
 
     int index_x = 0;
     int index_y = 0;
