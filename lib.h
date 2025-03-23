@@ -1,3 +1,5 @@
+#include "string.h"
+
 char *read_file(char argv[]){
     /* Get file pointer  */
     FILE *ptr_f = fopen(argv, "r");
@@ -14,9 +16,27 @@ char *read_file(char argv[]){
 
     char *input_buffer = malloc(file_size); /* Alloc memory according to file size */
     fread(input_buffer, file_size, 1, ptr_f);
-        
-    printf("%s", input_buffer);
 
     fclose(ptr_f); /* Close file */
     return input_buffer;
+}
+
+void cp_buffer_arr(char *buffer, int len_x, int len_y, double matrix[len_x][len_y]){
+    /* Override all \n for whitespaces */
+    for(int i = 0; buffer[i] != '\0'; i++)
+        if(buffer[i] == '\n')
+            buffer[i] = ' ';
+
+    int index_x = 0;
+    int index_y = 0;
+    char *str_ptr = strtok(buffer, " ");
+    for(int i = 0; str_ptr != NULL; i++){
+        matrix[index_x][index_y] = atof(str_ptr);
+        index_y++;
+        if(index_y == len_y){
+            index_y = 0;
+            index_x++;
+        }
+        str_ptr = strtok(NULL, " ");
+    }
 }

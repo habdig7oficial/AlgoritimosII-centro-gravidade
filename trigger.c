@@ -18,6 +18,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "lib.h"
+#include "string.h"
 
 int main(int argc, char *argv[]){
     
@@ -37,7 +38,17 @@ int main(int argc, char *argv[]){
     int len_x = atoi(&input_buffer[0]); /* Atoi casts char into int */
     int len_y = atoi(&input_buffer[2]); /* Atoi casts char into int */
 
-    printf("\n%d\n%d", len_x, len_y);
+    double matrix[len_x][len_y];
+
+    input_buffer = &input_buffer[4]; /* Remove first line */
+
+    cp_buffer_arr(input_buffer, len_x, len_y, matrix);
+
+    for(int i = 0; i < len_x; i++){
+        for(int j = 0; j < len_y; j++)
+            printf("%f\t", matrix[i][j]);
+        printf("\n");
+    }
 
     return 0;
 }
