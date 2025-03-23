@@ -21,6 +21,7 @@
 #include "lib.h"
 
 #include "stdbool.h"
+#include "math.h"
 
 double *sum_matrix(int len_x, int len_y, double matrix[len_x][len_y], bool is_row){
     double *res_sum = malloc(sizeof(double) * (is_row? len_x : len_y)); /* Alloc necessary memory checking if its row or column */
@@ -61,9 +62,11 @@ double *slice_arr(double *arr, int begin, int end){
     for(int i = 0; i < (end - begin); i++){
         slice[i] = arr[i + begin];
     }
-    printf("\n");
-    for(int i = 0; i < (end - begin); i++)
-        printf("%f\n", slice[i]);
+    /*
+        printf("\n");
+        for(int i = 0; i < (end - begin); i++)
+            printf("%f\n", slice[i]);
+    */
 
     return slice;
 }
@@ -95,7 +98,7 @@ int main(int argc, char *argv[]){
     double *sum_row = sum_matrix(len_x, len_y, matrix, true);
     double *sum_col = sum_matrix(len_x, len_y, matrix, false);
 
-
+    printf("Provided Matrix:\n");
     /* Print all matrix */
     for(int i = 0; i < len_x; i++){
         for(int j = 0; j < len_y; j++)
@@ -114,12 +117,13 @@ int main(int argc, char *argv[]){
     for(int i = 0; i < len_y; i++)
         printf("%f ", sum_col[i]);
 
+    printf("\n\n");
    // printf("\n%f", sum_arr(slice_arr(sum_row, 0, 0), 3));
 
     for(int i = 1; i <= len_x; i++){
         double before = sum_arr(slice_arr(sum_row, 0, i - 1), i);
         double after = sum_arr(slice_arr(sum_row, i, len_x), len_x - i);
-        printf("%f - %f\n\n", before, after);
+        printf("|%f - %f| = %f\n\n", before, after, fabs(after - before));
     }
 
 
