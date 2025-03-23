@@ -16,21 +16,35 @@
 */
 
 #include "stdio.h"
-
+#include "stdlib.h"
 
 int main(int argc, char *argv[]){
 
     if(argv[1] == NULL){
-        printf("No file provided, exiting...\n");
+        printf("No argument provided, exiting...\n");
         return -1;
     }
 
     FILE *ptr_f = fopen(argv[1], "r");
+
+    if(ptr_f == NULL){
+        printf("No file provided, exiting...\n");
+        return -2;
+    }
+
     fseek(ptr_f, 0, SEEK_END);
 
     int file_size = ftell(ptr_f);
 
-    printf("%d", file_size);
+    printf("Allocating %d bytes...\n", file_size);
+
+    rewind(ptr_f);
+
+    char *input_buffer = malloc(file_size);
+
+    fread(input_buffer, file_size, 1, ptr_f);
+        
+    printf("%s", input_buffer);
 
     fclose(ptr_f);
 
