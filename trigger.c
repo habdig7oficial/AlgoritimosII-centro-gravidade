@@ -18,23 +18,13 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-int main(int argc, char *argv[]){
-    
-    /* Check if first agument is NULL */
-
-    if(argv[1] == NULL){
-        printf("No argument provided, exiting...\n");
-        return -1;
-    }
-
-    /* Get file pointer*/ */
-    FILE *ptr_f = fopen(argv[1], "r");
+char *read_file(char argv[]){
+    /* Get file pointer  */
+    FILE *ptr_f = fopen(argv, "r");
 
     /* If file not exists return */
-    if(ptr_f == NULL){
-        printf("No file provided, exiting...\n");
-        return -2;
-    }
+    if(ptr_f == NULL)
+        return NULL;
 
     /* Get size of file by going to the end and returning to its start */
     fseek(ptr_f, 0, SEEK_END); 
@@ -48,7 +38,23 @@ int main(int argc, char *argv[]){
     printf("%s", input_buffer);
 
     fclose(ptr_f); /* Close file */
+    return input_buffer;
+}
 
+int main(int argc, char *argv[]){
+    
+    /* Check if first agument is NULL */
+    if(argv[1] == NULL){
+        printf("No argument provided, exiting...\n");
+        return -1;
+    }
+
+    char *input_buffer = read_file(argv[1]);
+
+    if(input_buffer == NULL){
+        printf("No file provided, exiting...\n");
+        return -1;
+    }
     
     printf("\n%c", input_buffer[0]);
 
