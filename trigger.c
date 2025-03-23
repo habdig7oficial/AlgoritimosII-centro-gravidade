@@ -1,5 +1,4 @@
 /* 
-    
     Copyright © 2025 Mateus Felipe da Silveira Vieira, Thiago Brito Oliveira dos Santos	
     
     This program is free software: you can redistribute it and/or modify
@@ -19,7 +18,7 @@
 #include "stdio.h"
 
 
-int main(){
-    printf("hello");
+int main(int argc, char *argv[]){
+    printf("%s", argv[1]);
     return 0;
 }
