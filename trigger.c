@@ -49,6 +49,25 @@ double *sum_matrix(int len_x, int len_y, double matrix[len_x][len_y], bool is_ro
     return res_sum;
 }
 
+double sum_arr(double *arr, int len){
+    double acc = 0;
+    for(int i = 0; i < len; i++)
+        acc += arr[i];
+    return acc;
+}
+
+double *slice_arr(double *arr, int begin, int end){
+    double *slice = malloc(sizeof(double) * (end - begin));
+    for(int i = 0; i < (end - begin); i++){
+        slice[i] = arr[i + begin];
+    }
+    printf("\n");
+    for(int i = 0; i < (end - begin); i++)
+        printf("%f\n", slice[i]);
+
+    return slice;
+}
+
 int main(int argc, char *argv[]){
     
     /* Check if first agument is NULL */
@@ -77,20 +96,32 @@ int main(int argc, char *argv[]){
     double *sum_col = sum_matrix(len_x, len_y, matrix, false);
 
 
+    /* Print all matrix */
     for(int i = 0; i < len_x; i++){
         for(int j = 0; j < len_y; j++)
             printf("%f\t", matrix[i][j]);
         printf("\n");
     }
-    printf("--------\n");
+    printf("--------\nX: ");
 
+    /* Print sum x */
     for(int i = 0; i < len_x; i++)
         printf("%f ", sum_row[i]);
     
-    printf("\n--------\n");
+    printf("\n--------\nY: ");
 
+    /* Print sum y */
     for(int i = 0; i < len_y; i++)
         printf("%f ", sum_col[i]);
+
+   // printf("\n%f", sum_arr(slice_arr(sum_row, 0, 0), 3));
+
+    for(int i = 1; i <= len_x; i++){
+        double before = sum_arr(slice_arr(sum_row, 0, i - 1), i);
+        double after = sum_arr(slice_arr(sum_row, i, len_x), len_x - i);
+        printf("%f - %f\n\n", before, after);
+    }
+
 
     return 0;
 }
