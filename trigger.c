@@ -102,21 +102,8 @@ struct Minimun min(double arr[], int len){
     return res;
 }
 
-int main(int argc, char *argv[]){
-    
-    /* Check if first agument is NULL */
-    if(argv[1] == NULL){
-        printf("No argument provided, exiting...\n");
-        return -1;
-    }
-
-    char *input_buffer = read_file(argv[1]);
-
-    if(input_buffer == NULL){
-        printf("No file provided, exiting...\n");
-        return -1;
-    }
-    
+void process_matrix(char *input_buffer){
+     
     int len_x = atoi(&input_buffer[0]); /* Atoi casts char into int */
     int len_y = atoi(&input_buffer[2]); /* Atoi casts char into int */
 
@@ -158,12 +145,32 @@ int main(int argc, char *argv[]){
     double *mass_y = mass_arr(sum_col, len_y);
     struct Minimun center_y = min(mass_y, len_y);
 
-    for(int i = 0; i < len_y; i++)
-        printf("%f ", mass_y[i]);
-
 
     printf("\nX[%d] mass center: %f\n", center_x.index, center_x.value);
     printf("Y[%d] mass center: %f", center_y.index, center_y.value);
+}
+
+int main(int argc, char *argv[]){
+
+    for(int i = 1; i < argc; i++){
+        printf("-- BEGIN MATRIX[%d] --\n", i);
+        /* Check if first agument is NULL */
+        if(argv[i] == NULL){
+            printf("No argument provided, exiting...\n");
+            return -1;
+        }
+        char *input_buffer = read_file(argv[i]);
+
+        if(input_buffer == NULL){
+            printf("No file provided, exiting...\n");
+            return -1;
+        }
+
+        process_matrix(input_buffer);
+
+        printf("\n-- END MATRIX[%d] --\n\n", i);
+
+    }
 
 
     return 0;
