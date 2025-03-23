@@ -19,34 +19,38 @@
 #include "stdlib.h"
 
 int main(int argc, char *argv[]){
+    
+    /* Check if first agument is NULL */
 
     if(argv[1] == NULL){
         printf("No argument provided, exiting...\n");
         return -1;
     }
 
+    /* Get file pointer*/ */
     FILE *ptr_f = fopen(argv[1], "r");
 
+    /* If file not exists return */
     if(ptr_f == NULL){
         printf("No file provided, exiting...\n");
         return -2;
     }
 
-    fseek(ptr_f, 0, SEEK_END);
-
+    /* Get size of file by going to the end and returning to its start */
+    fseek(ptr_f, 0, SEEK_END); 
     int file_size = ftell(ptr_f);
-
     printf("Allocating %d bytes...\n", file_size);
-
     rewind(ptr_f);
 
-    char *input_buffer = malloc(file_size);
-
+    char *input_buffer = malloc(file_size); /* Alloc memory according to file size */
     fread(input_buffer, file_size, 1, ptr_f);
         
     printf("%s", input_buffer);
 
-    fclose(ptr_f);
+    fclose(ptr_f); /* Close file */
+
+    
+    printf("\n%c", input_buffer[0]);
 
     return 0;
 }
