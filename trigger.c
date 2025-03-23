@@ -22,7 +22,7 @@
 
 #include "stdbool.h"
 
-double *sum_arr(int len_x, int len_y, double matrix[len_x][len_y], bool is_row){
+double *sum_matrix(int len_x, int len_y, double matrix[len_x][len_y], bool is_row){
     double *res_sum = malloc(sizeof(double) * (is_row? len_x : len_y)); /* Alloc necessary memory checking if its row or column */
 
     /* 
@@ -73,8 +73,8 @@ int main(int argc, char *argv[]){
 
     cp_buffer_arr(input_buffer, len_x, len_y, matrix);
 
-    double *sum_row = sum_arr(len_x, len_y, matrix, true);
-    double *sum_col = sum_arr(len_x, len_y, matrix, false);
+    double *sum_row = sum_matrix(len_x, len_y, matrix, true);
+    double *sum_col = sum_matrix(len_x, len_y, matrix, false);
 
 
     for(int i = 0; i < len_x; i++){
