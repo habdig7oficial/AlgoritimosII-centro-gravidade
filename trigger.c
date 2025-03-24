@@ -148,6 +148,11 @@ void process_matrix(char *input_buffer){
 
     printf("\nX[%d] mass center: %f\n", center_x.index, center_x.value);
     printf("Y[%d] mass center: %f", center_y.index, center_y.value);
+
+    free(sum_row);
+    free(sum_col);
+    free(mass_x);
+    free(mass_y);
 }
 
 int main(int argc, char *argv[]){
@@ -169,6 +174,7 @@ int main(int argc, char *argv[]){
         process_matrix(input_buffer);
 
         printf("\n-- END MATRIX[%d] --\n\n", i);
+        free(input_buffer);
 
     }
 
